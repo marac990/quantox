@@ -43,10 +43,12 @@ class HomeController
         }  else {
             $users = false;
         }
+        $search = $this->request->getParameter('search');
         $data = [
             'users' => $users,
             'user' => $user,
-            'search_has_records' => $users ? true : false
+            'search_has_records' => $users ? true : false,
+            'search' => $search ? true : false
         ];
         $html = $this->renderer->render('home', $data);
 
