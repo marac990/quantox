@@ -9,15 +9,14 @@ class DB {
     private static $instance = null;
     private $conn;
 
-    private $host = 'localhost';
-    private $user = 'homestead';
-    private $pass = 'secret';
-    private $name = 'quantox';
-
     // The db connection is established in the private constructor.
     private function __construct()
     {
-        $this->conn = new PDO("mysql:host={$this->host};dbname={$this->name}", $this->user,$this->pass,
+        $db_host = getenv('DB_HOST');
+        $db_user = getenv('DB_USER');
+        $db_pass = getenv('DB_PASS');
+        $db_name = getenv('DB_NAME');
+        $this->conn = new PDO("mysql:host={$db_host};dbname={$db_name}", $db_user,$db_pass,
             [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"]);
     }
 
