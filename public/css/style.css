@@ -1,0 +1,28 @@
+header {
+    margin-top: 20px;
+}
+
+header .input {
+    padding: 0;
+}
+
+header h1 {
+    font-size: 26px;
+}
+
+header .wrapper {
+    margin-left: auto;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    display: inline-block;
+}
+
+h1 {
+    text-align: center;
+}
+
+#login-form .form-group.submit-button {
+    text-align: center;
+}

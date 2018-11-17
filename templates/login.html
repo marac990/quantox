@@ -1,22 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Quantox</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-</head>
+{{> layout/header}}
 
-<body>
 <div class="container">
-    <div class="col-md-12">
-        <form action="" method="POST">
-            <input class="form-control" name="email">
-            <input class="form-control" name="password">
-
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+    <div class="row">
+        <div class="col-12">
+            <h1>Login</h1>
+        </div>
     </div>
+
+    <form id="login-form" action="/login" method="POST">
+        <div class="row form-group">
+            <label for="">email:</label>
+            <input type="email" class="form-control" name="email">
+        </div>
+        <div class="row form-group">
+            <label for="">Password:</label>
+            <input type="password" class="form-control" name="password">
+        </div>
+        <div class="form-group submit-button">
+            <button type="submit" name="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+
 </div>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-</body>
-</html>
+{{> layout/footer}}

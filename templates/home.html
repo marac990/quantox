@@ -2,9 +2,22 @@
 {{> layout/header}}
     <div class="container">
         <div class="col-md-12">
-            {{#users}}
-            <h1>Hello {{email}}!</h1>
-            {{/users}}
+            {{#user}}
+            <table class="table">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+                {{#users}}
+                <tr>
+                    <td>{{firstname}}</td>
+                    <td>{{lastname}}</td>
+                    <td>{{email}}</td>
+                </tr>
+                {{/users}}
+            </table>
+            {{/user}}
         </div>
     </div>
 
