@@ -32,23 +32,15 @@ class HomeController
 
     public function getIndex( FlashMessages $msg, UserRepository $userRepository )
     {
-        if (!empty($_SESSION['user_id'])) {
-            $user = $userRepository->getUser( $_SESSION['user_id'] );
-        } else {
-            $user = false;
-        }
+        $user = $userRepository->getUserIfLoggedIn();
+        $keyword = $this->request->getParameter('search');
+        $users = $userRepository->getUsers( $keyword );
 
-        if ( ( $keyword = $this->request->getParameter('search') ) ) {
-            $users = $userRepository->getUsers( $keyword );
-        }  else {
-            $users = false;
-        }
-        $search = $this->request->getParameter('search');
         $data = [
             'users' => $users,
             'user' => $user,
             'search_has_records' => $users ? true : false,
-            'search' => $search ? true : false
+            'search' => $keyword
         ];
         $html = $this->renderer->render('home', $data);
 

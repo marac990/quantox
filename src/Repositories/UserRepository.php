@@ -29,6 +29,15 @@ class UserRepository
         return $user;
     }
 
+    public function getUserIfLoggedIn()
+    {
+        if (!empty($_SESSION['user_id'])) {
+            return $this->getUser( $_SESSION['user_id'] );
+        } else {
+            return false;
+        }
+    }
+
     public function getUserByEmailAndPassword( $email, $password )
     {
         $password = md5( $password );
