@@ -32,9 +32,6 @@ class HomeController
 
     public function getIndex( FlashMessages $msg, UserRepository $userRepository )
     {
-        if ( $msg->hasMessages() ) {
-            $msg->display();
-        }
         if (!empty($_SESSION['user_id'])) {
             $user = $userRepository->getUser( $_SESSION['user_id'] );
         } else {
@@ -57,5 +54,8 @@ class HomeController
         $html = $this->renderer->render('home', $data);
 
         $this->response->setContent($html);
+        if ( $msg->hasMessages() ) {
+            $msg->display();
+        }
     }
 }
