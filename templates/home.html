@@ -2,7 +2,9 @@
 {{> layout/header}}
     <div class="container">
         <div class="col-md-12">
+            <!--Logged in-->
             {{#user}}
+            {{#search_has_records}}
             <table class="table">
                 <tr>
                     <th scope="col">Name</th>
@@ -17,6 +19,16 @@
                 </tr>
                 {{/users}}
             </table>
+            {{/search_has_records}}
+            {{^users}}
+            <h1>No records for the search keyword, please try with a different name.</h1>
+            {{/users}}
+            {{/user}}
+            <!--Not logged in-->
+            {{^user}}
+                {{#users}}
+                    <h1>You must be logged in to view the users data.</h1>
+                {{/users}}
             {{/user}}
         </div>
     </div>

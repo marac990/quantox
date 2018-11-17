@@ -43,13 +43,10 @@ class HomeController
         }  else {
             $users = false;
         }
-
-        if ( ( $this->request->getParameter('search') ) && !$user ) {
-            $this->msg->error('You must be logged in to see the registered users');
-        }
         $data = [
             'users' => $users,
-            'user' => $user
+            'user' => $user,
+            'search_has_records' => $users ? true : false
         ];
         $html = $this->renderer->render('home', $data);
 
