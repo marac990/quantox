@@ -48,7 +48,7 @@ class LoginController
             $this->msg->error( 'Email and Password fields are required' );
             $this->response->redirect( '/login' );
         } elseIf ( !( $user = $userRepository->getUserByEmailAndPassword( $params['email'], $params['password'] ) ) ) {
-           $this->msg->error('Verify that you tiped the email and password correctly. A user with this email and password doesn\'t exist');
+           $this->msg->error('Verify that you typed the email and password correctly. A user with this email and password doesn\'t exist');
             $this->response->redirect( '/login' );
         } else {
             $user = $userRepository->getUserByEmailAndPassword( $params['email'], $params['password'] );
