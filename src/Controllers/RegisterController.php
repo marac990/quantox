@@ -22,7 +22,8 @@ class RegisterController
         Renderer $renderer,
         UserRepository $users,
         FlashMessages $msg
-    ) {
+    )
+    {
         $this->request = $request;
         $this->response = $response;
         $this->renderer = $renderer;
@@ -32,48 +33,34 @@ class RegisterController
 
     public function getRegister()
     {
-        if ( $this->msg->hasMessages() ) {
-            $this->msg->display();
-        }
         $html = $this->renderer->render('register');
-
         $this->response->setContent($html);
     }
 
-    public function postRegister( UserRepository $userRepository )
+    public function postRegister(UserRepository $userRepository)
     {
         $params = $this->request->getParameters();
-        if ( !$this->isFormValid( $params ) ) {
+        $this->validateForm($params);
+        $userId = $userRepository->saveUser($params);
+        $userId ? ($_SESSION['user_id'] = $userId) : $this->msg->add('A user with this email already exists', FlashMessages::ERROR);
+
+        if ($this->msg->hasErrors()) {
             $this->response->redirect('/register');
         } else {
-            if ($userId =  $userRepository->saveUser( $params ) ) {
-                $_SESSION['user_id'] = $userId;
-                $this->msg->success('You have successfully registered.');
-                $this->response->redirect('/');
-            } else {
-                $this->msg->error( 'A user with the specified email already exists' );
-                $this->response->redirect('/register');
-            }
-
-
+            $this->msg->add( 'You have successfully registered.', FlashMessages::SUCCESS );
+            $this->response->redirect('/');
         }
     }
 
-    private function isFormValid( $params )
+    private function validateForm($params)
     {
-        if ( empty($params['email']) || empty($params['name']) || empty($params['email2']) || empty( $params['password'] ) || empty( $params['password2'] ) ) {
-            $this->msg->error('Email, Email Confirmation, Password, Password confirmation and Name are required fields');
-            return false;
-        }
-        if ( $params['email'] != $params['email2'] ) {
-            $this->msg->error('Your Email and Email confirmation must match.');
-            return false;
-        }
-        if ( $params['password'] != $params['password2'] ) {
-            $this->msg->error('Your Password and Password confirmation must match.');
-            return false;
-        }
-        return true;
+        !empty($params['email'])                      ?: $this->msg->add('Email field is required', FlashMessages::ERROR);
+        !empty($params['email2'])                     ?: $this->msg->add('Email Confirmation field is required', FlashMessages::ERROR);
+        !empty($params['name'])                       ?: $this->msg->add('Name field is required', FlashMessages::ERROR);
+        !empty($params['password'])                   ?: $this->msg->add('Password field is required', FlashMessages::ERROR);
+        !empty($params['password2'])                  ?: $this->msg->add('Password Confirmation field is required', FlashMessages::ERROR);
+        ($params['email'] == $params['email2'])       ?: $this->msg->add('Emails don\'t match', FlashMessages::ERROR);
+        ($params['password'] == $params['password2']) ?: $this->msg->add('Passwords don\'t match', FlashMessages::ERROR);
 
     }
 

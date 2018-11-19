@@ -18,16 +18,18 @@ $injector->define('Http\Request', [
 $injector->alias('Http\Response', 'Http\HttpResponse');
 $injector->share('Http\HttpResponse');
 
-$injector->alias('Quantox\FlashMessages', 'Quantox\FlashMessages');
-$injector->share('Quantox\FlashMessages');
-
 $injector->alias('Quantox\Templates\Renderer', 'Quantox\Templates\MustacheRenderer');
+
+$messenger = $injector->make( 'Quantox\Helpers\FlashMessages' );
 
 $injector->define('Mustache_Engine', [
     ':options' => [
         'loader' => new Mustache_Loader_FilesystemLoader(dirname(__DIR__) . '/templates', [
             'extension' => '.html',
-        ])
+        ]),
+        'helpers' => [
+            'message' => $messenger->display( null, false )
+        ]
     ],
 ]);
 
