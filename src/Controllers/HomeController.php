@@ -45,8 +45,5 @@ class HomeController
         $html = $this->renderer->render('home', $data);
 
         $this->response->setContent($html);
-        if ( $msg->hasMessages() ) {
-            $msg->display();
-        }
     }
 }
